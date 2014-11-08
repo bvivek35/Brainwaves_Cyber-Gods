@@ -15,11 +15,11 @@ import android.widget.Toast;
 public class Screen2 extends Activity {
 
     public final static String EXTRA_MESSAGE1 = "cybergods.brainwaves.com.MESSAGE";
-    public static String message3 = "";
+    String[] message3 = null;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        String message3 = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        message3 = intent.getStringArrayExtra(MainActivity.EXTRA_MESSAGE);
         setContentView(R.layout.activity_screen2);
     }
 
@@ -38,15 +38,17 @@ public class Screen2 extends Activity {
         //Toast.makeText(this,"test"+s.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
         if(s.getSelectedItem().toString().equals("Withdrawal"))
          {
-             Toast.makeText(this,"test"+s.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
+            // handler for withdrawal
+             //Toast.makeText(this,"test"+message3[0].toString(),Toast.LENGTH_LONG).show();
              Intent intent = new Intent(this, Screen3.class);
              intent.putExtra(EXTRA_MESSAGE1,message3);
              startActivity(intent);
 
          }
         else
-        {
-            Intent intent = new Intent(this, Screen4.class);
+        {   //handler for anything but withdrawal
+            //Send NDEF message containing Code, A/c num, IMEI num
+            Intent intent = new Intent(this, Beam.class);
             intent.putExtra(EXTRA_MESSAGE1,message3);
             startActivity(intent);
         }

@@ -2,7 +2,9 @@ package com.brainwaves.cybergods.nbanking;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,13 +26,17 @@ public class MainActivity extends Activity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+                //handler for submit button
+                String message[] = new String[5];
                 Intent intent = new Intent(ma, Screen2.class);
                 EditText editText = (EditText) findViewById(R.id.editText);
-                String message = editText.getText().toString();
-                EditText editText1 = (EditText) findViewById(R.id.editText3);
                 String message1 = editText.getText().toString();
-                intent.putExtra(EXTRA_MESSAGE,new String[] {message,message1});
+                EditText editText1 = (EditText) findViewById(R.id.editText3);
+                String message2 = editText1.getText().toString();
+                message[1] = message1;
+                message[3] = message2;
+                message[4] = "foo";
+                intent.putExtra(EXTRA_MESSAGE,message);
                 startActivity(intent);
             }
         });
