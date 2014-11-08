@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context="com.brainwaves.cybergods.nbanking.Screen3">
 
 
     <EditText
@@ -13,24 +13,14 @@
         android:layout_alignParentTop="true"
         android:layout_gravity="center"
         android:paddingTop="175dp"
-        android:hint="Enter Account Number"
-     />
-
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText3"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="30dp"
-        android:hint="Enter Pin
-        "/>
+        android:hint="Enter Amount"
+        />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
-        android:id="@+id/button"
+        android:id="@+id/button3"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"   />
-
+        android:layout_marginTop="35dp"/>
 </LinearLayout>
