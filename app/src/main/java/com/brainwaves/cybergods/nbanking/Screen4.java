@@ -1,6 +1,7 @@
 package com.brainwaves.cybergods.nbanking;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,9 +9,11 @@ import android.view.MenuItem;
 
 public class Screen4 extends Activity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+        String[] message5 = null;
+        protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        message5 = intent.getStringArrayExtra(Screen2.EXTRA_MESSAGE1);
         setContentView(R.layout.activity_screen4);
     }
 

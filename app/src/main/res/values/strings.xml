@@ -8,6 +8,7 @@
     <string name="select_operation">Select Operation</string>
 
     <string-array name="list_operations">
+        <item>Select Option</item>
         <item>Withdrawal</item>
         <item>Statement</item>
         <item>Last 10 transactions</item>
@@ -15,5 +16,7 @@
 
     <string name="title_activity_screen3">Screen3</string>
     <string name="title_activity_screen4">Screen4</string>
+    <string name="title_activity_launcher">Launcher</string>
+    <string name="title_activity_beam">Beam</string>
 
 </resources>

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.brainwaves.cybergods.nbanking.Screen3">
+    tools:context="com.brainwaves.cybergods.nbanking.Screen3"
+    android:background="@drawable/bg3">
 
 
     <EditText
@@ -22,5 +23,6 @@
         android:text="Submit"
         android:id="@+id/button3"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="35dp"/>
+        android:layout_marginTop="35dp"
+        android:onClick="sub"/>
 </LinearLayout>
