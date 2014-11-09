@@ -161,6 +161,7 @@ public class Beam extends Activity implements NfcAdapter.CreateNdefMessageCallba
     private void processIntent(Intent intent) {
         // TODO Auto-generated method stub
         textView = (TextView) findViewById(R.id.textView);
+        textView.setText("Click to read");
         Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
         NdefMessage msg = (NdefMessage) rawMsgs[0];
         String payload = new String(msg.getRecords()[0].getPayload());

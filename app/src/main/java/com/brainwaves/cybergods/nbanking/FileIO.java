@@ -31,7 +31,6 @@ class FileIO {
         try {
             Writer w = new FileWriter("/sdcard/input");
             w.write(s+"\n");
-            w.write("hellohelloasdasdkj\n");
             w.close()   ;
         } catch (Exception e) {
             e.printStackTrace();

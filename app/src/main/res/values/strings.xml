@@ -11,7 +11,6 @@
         <item>Select Option</item>
         <item>Withdrawal</item>
         <item>Statement</item>
-        <item>Last 10 transactions</item>
     </string-array>
 
     <string name="title_activity_screen3">Screen3</string>

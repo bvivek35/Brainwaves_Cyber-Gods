@@ -1,23 +1,25 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 
 import sqlite3
 import pexpect
+import os
 
-
-path_if_adb = "/home/vb-deb/inp.txt.ref"
-path_of_adb = "/home/vb-deb/out.txt.ref"
+path_if_adb = "/home/utkarsh/Devel/inp.txt.ref"
+path_of_adb = "/home/utkarsh/Devel/out.txt.ref"
 
 adb_pull_cmd= "adb pull /sdcard/input " + path_if_adb
 adb_push_cmd= "adb push " + path_of_adb +  " /sdcard/output "
 
 
 def take_from_adb() :
-	child = pexpect.spawn(adb_pull_cmd)
-	child.expect(pexpect.EOF)
+	os.system(adb_pull_cmd)
+	#child = pexpect.spawn(adb_pull_cmd)
+	#child.expect(pexpect.EOF)
 
 def give_to_adb() :
-	child = pexpect.spawn(adb_pull_cmd)
-	child.expect(pexpect.EOF)
+	os.system(adb_push_cmd)
+	#child = pexpect.spawn(adb_pull_cmd)
+	#child.expect(pexpect.EOF)
 
 
 def print_db():
@@ -51,8 +53,9 @@ def do_wd(rs) :
 	rs = rs.fetchone()
 	if rs == None :
 		cur.execute(get_insert("transactions", acc, bal))
-	cur.execute("update transactions set wd_amt="+str(bal)+" where acc like (\'"+str(acc)+"\')")
-	return SUCCESS_WD + "ACC : " + str(acc) + "\tBAL REMAINING : "+ str(bal_db) + " LAST TRANSACTION : " + str(bal)
+	else:
+		cur.execute("update transactions set wd_amt="+str(bal)+" where acc like (\'"+str(acc)+"\')")
+	return SUCCESS_WD + "ACC : " + str(acc) + "\n\tBAL REMAINING : "+ str(bal_db) + " \n\tLAST TRANSACTION : " + str(bal)
 	
 def get_mini_stmt() :
 	global cur
@@ -70,17 +73,17 @@ def get_mini_stmt() :
 	if pin_db != pin :
 		return ERROR_PIN
 	
-	s = "ACC : " + rs[0] + "\tBALANCE : " + str(rs[3])
+	s = "ACC : " + rs[0] + "\n\tBALANCE : " + str(rs[3])
 	rs = cur.execute("select * from transactions where acc like (\'" + str(acc) + "\')")
 	rs = rs.fetchone()
 	if rs == None :
-		return "0,NO TRANSACTIONS DONE"	
+		return "-1,NO TRANSACTIONS DONE"	
 	return "1,TRANSACTION DONE : \n" + s 
 
-path_db = "/home/vb-deb/details.db"
+path_db = "/home/utkarsh/Devel/details.db"
 
-path_if = "/home/vb-deb/inp.txt.ref"
-path_of = "/home/vb-deb/out.txt.ref"
+path_if = "/home/utkarsh/Devel/inp.txt.ref"
+path_of = "/home/utkarsh/Devel/out.txt.ref"
 
 create_table_acc_details = "create table if not exists acc_details (acc text PRIMARY KEY, imei text, pin text, bal real)"
 
@@ -98,12 +101,12 @@ def get_insert(table, *l) :
 
 
 
-ERROR_ACC = "0,ACCOUNT NUMBER NOT REGISTERED\n"
-ERROR_IMEI = "0,IMEI NUMBER NOT MATCHING\n"
-ERROR_PIN = "0,WRONG PIN ENTERED\n"
-ERROR_BAL = "0,YOU DONOT HAVE ENOUGH BALANCE\n"
-SUCCESS_REG = "1,REGISTERED USER\n"
-SUCCESS_WD = "1,WITHDRAWL SUCCESS.\n"
+ERROR_ACC = "-1,ACCOUNT NUMBER NOT REGISTERED\n"
+ERROR_IMEI = "-1,IMEI NUMBER NOT MATCHING\n"
+ERROR_PIN = "-1,WRONG PIN ENTERED\n"
+ERROR_BAL = "-1,YOU DONOT HAVE ENOUGH BALANCE\n"
+SUCCESS_REG = "10,REGISTERED USER\n"
+SUCCESS_WD = "0,WITHDRAWAL SUCCESS.\n"
 
 take_from_adb()
 
@@ -130,18 +133,18 @@ bal = float(req[4])
 
 out = open(path_of, "w")
 
-if op == 1 :
+if op == 10 :
 	query = get_insert("acc_details", acc, imei, pin, bal)
 	cur.execute(query)
 	out.write("1,REGISTERED")	
 	
-elif op == 2 :
+elif op == 3 :
 	query = "select * from acc_details where acc like (\'" + str(acc) + "\')"
 	rs = cur.execute(query)
 	s = do_wd(rs)
 	out.write(s)
 	
-elif op == 3 :
+elif op == 2 :
 	s = get_mini_stmt()
 	out.write(s)	
 
