@@ -1,12 +1,13 @@
 package com.brainwaves.cybergods.nbanking;
 
+
 /**
  * Created by utkarsh on 9/11/14.
  */
 
 
-    import java.io.*;
-    import java.util.Scanner;
+import java.io.*;
+import java.util.Scanner;
 /**
  * Created by vb-deb on 9/11/14.
  */
@@ -30,10 +31,12 @@ class FileIO {
         try {
             Writer w = new FileWriter("/sdcard/input");
             w.write(s+"\n");
+            w.write("hellohelloasdasdkj\n");
             w.close()   ;
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-}
+    }
+
