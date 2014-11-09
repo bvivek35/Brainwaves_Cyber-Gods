@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
                 String message2 = editText1.getText().toString();
                 message[1] = message1;
                 message[3] = message2;
-                message[4] = "foo";
+                message[4] = "0";
                 intent.putExtra(EXTRA_MESSAGE,message);
                 startActivity(intent);
             }

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 public class Screen2 extends Activity {
 
+    public static boolean flag = false;
     public final static String EXTRA_MESSAGE1 = "cybergods.brainwaves.com.MESSAGE";
     String[] message3 = null;
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class Screen2 extends Activity {
         //Toast.makeText(this,"test"+s.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
         if(s.getSelectedItem().toString().equals("Withdrawal"))
          {
+             flag = true;
             // handler for withdrawal
              //Toast.makeText(this,"test"+message3[0].toString(),Toast.LENGTH_LONG).show();
              Intent intent = new Intent(this, Screen3.class);
@@ -46,7 +48,9 @@ public class Screen2 extends Activity {
 
          }
         else
-        {   //handler for anything but withdrawal
+        {
+            flag = false;
+            //handler for anything but withdrawal
             //Send NDEF message containing Code, A/c num, IMEI num
             Intent intent = new Intent(this, Beam.class);
             intent.putExtra(EXTRA_MESSAGE1,message3);

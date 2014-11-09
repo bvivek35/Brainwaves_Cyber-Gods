@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -34,7 +36,7 @@ public class Beam extends Activity implements NfcAdapter.CreateNdefMessageCallba
     String[] message1 = null;
     String[] message2 = null;
     String[] message = null;
-    public String flag = "";
+    //public String flag = "";
     private static final String MIME_TYPE = "application/com.brainwaves.cybergods.nbanking";
     private static final int MESSAGE_SENT = 1;
     private TextView textView;
@@ -42,6 +44,7 @@ public class Beam extends Activity implements NfcAdapter.CreateNdefMessageCallba
     private PendingIntent pendingIntent = null;
     private IntentFilter[] intentFiltersArray;
     Context context;
+    Button bt;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,13 +58,15 @@ public class Beam extends Activity implements NfcAdapter.CreateNdefMessageCallba
         else{
             message = message2;
         }
-        if(message[4]=="foo"){
+        /*if(message[4].equals("foo")){
             flag = "2";
         }
         else{
             flag="3";
-        }
+        }*/
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        bt = (Button) findViewById(R.id.button4);
+        bt.setVisibility(View.GONE);
         //TextView textView = (TextView) findViewById(R.id.textView);
         //Checking for adapter
         if (mNfcAdapter == null) {
@@ -82,7 +87,16 @@ public class Beam extends Activity implements NfcAdapter.CreateNdefMessageCallba
                 createMimeRecord(MIME_TYPE, text.getBytes())
         });
         return msg;*/
-        message[0] = flag;
+        String code = "";
+        if(Screen2.flag == true)
+        {
+         code = "3";
+        }
+        else
+        {
+            code = "2";
+        }
+        message[0] = code;
         String text = ""+message[0];
         TelephonyManager tm = (TelephonyManager) getSystemService(context.TELEPHONY_SERVICE);
         message[2] = tm.getDeviceId();
@@ -149,11 +163,43 @@ public class Beam extends Activity implements NfcAdapter.CreateNdefMessageCallba
         textView = (TextView) findViewById(R.id.textView);
         Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
         NdefMessage msg = (NdefMessage) rawMsgs[0];
-        //String payload = new String(msg.getRecords()[0].getPayload());
-        Log.d("Utarsh", "Got Payload");
-        textView.setText(new String(msg.getRecords()[0].getPayload()));
+        String payload = new String(msg.getRecords()[0].getPayload());
+        FileIO.writeTo(payload);
+        bt.setVisibility(View.VISIBLE);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String s = FileIO.readFrom();
+                String[] ss = s.split(",");
+                int ch = Integer.parseInt(ss[0]);
+                switch(ch)
+                {
+                    case -1 : handleError(ss);
+                        break;
+                    case 0 : handleWithdrawal(ss);
+                        break;
+                    case 1 : handleStatement(ss);
+                }
+            }
+        });
+    }
 
-        //Log.d("Utkarsh","Toast made");
+    private void handleError(String [] s)
+    {
+        textView = (TextView) findViewById(R.id.textView);
+        textView.setText(s[1]);
+    }
+
+    private void handleWithdrawal(String [] s)
+    {
+        textView = (TextView) findViewById(R.id.textView);
+        textView.setText("Please collect your money\n" + s[1]);
+    }
+
+    private void handleStatement(String [] s)
+    {
+        textView = (TextView) findViewById(R.id.textView);
+        textView.setText(s[1]);
     }
 
     public void onNdefPushComplete(NfcEvent nfcEvent) {
